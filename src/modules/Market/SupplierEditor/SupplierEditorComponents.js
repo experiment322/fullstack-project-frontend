@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Form, FormGroup, FormControl, Button, ButtonGroup, Panel, Glyphicon, ProgressBar, Label, ControlLabel } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, Button, ButtonGroup, Panel, Glyphicon, ProgressBar, Label, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 export class SupplierEditorForm extends React.Component {
     static propTypes = {
@@ -55,10 +55,12 @@ export class SupplierEditorForm extends React.Component {
                 <FormGroup validationState={this.checkInput('name') ? 'success' : 'error'}>
                     <ControlLabel>Name</ControlLabel>
                     <FormControl name="name" value={this.state.name} onChange={this.changeState} type="text" />
+                    <HelpBlock>A string between 10 and 255 characters.</HelpBlock>
                 </FormGroup>
                 <FormGroup validationState={this.checkInput('address') ? 'success' : 'error'}>
                     <ControlLabel>Address</ControlLabel>
                     <FormControl name="address" value={this.state.address} onChange={this.changeState} type="text" />
+                    <HelpBlock>A string between 10 and 255 characters.</HelpBlock>
                 </FormGroup>
                 <ButtonGroup>
                     {!supplier && <Button bsStyle="primary" onClick={() => this.checkInput() && onClickCreate(this.state)}>CREATE</Button>}

@@ -71,25 +71,30 @@ export class ProductEditorForm extends React.Component {
                 <FormGroup validationState={this.checkInput('name') ? 'success' : 'error'}>
                     <ControlLabel>Name</ControlLabel>
                     <FormControl name="name" value={this.state.name} onChange={this.changeState} type="text" />
+                    <HelpBlock>A string between 10 and 255 characters.</HelpBlock>
                 </FormGroup>
                 <FormGroup validationState={this.checkInput('description') ? 'success' : 'error'}>
                     <ControlLabel>Description</ControlLabel>
                     <FormControl name="description" value={this.state.description} onChange={this.changeState} type="text" />
+                    <HelpBlock>A string between 10 and 255 characters.</HelpBlock>
                 </FormGroup>
                 <FormGroup validationState={this.checkInput('supplierId') ? 'success' : 'error'}>
                     <ControlLabel>Supplier</ControlLabel>
                     <FormControl name="supplierId" value={this.state.supplierId} onChange={this.changeState} componentClass="select">
                         {supplierSelectorOptions}
                     </FormControl>
+                    {suppliers.length !== 0 && <HelpBlock>Select a supplier from the list.</HelpBlock>}
                     {suppliers.length === 0 && <HelpBlock>Note: Maybe you should add some suppliers first :).</HelpBlock>}
                 </FormGroup>
                 <FormGroup validationState={this.checkInput('quantity') ? 'success' : 'error'}>
                     <ControlLabel>Quantity</ControlLabel>
                     <FormControl name="quantity" value={this.state.quantity} onChange={this.changeState} type="number" />
+                    <HelpBlock>A number between 0 and 999 999 999.</HelpBlock>
                 </FormGroup>
                 <FormGroup validationState={this.checkInput('price') ? 'success' : 'error'}>
                     <ControlLabel>Price($)</ControlLabel>
                     <FormControl name="price" value={this.state.price} onChange={this.changeState} type="number" />
+                    <HelpBlock>A number between 0 and 999 999.</HelpBlock>
                 </FormGroup>
                 <ButtonGroup>
                     {!product && <Button bsStyle="primary" onClick={() => this.checkInput() && onClickCreate(this.state)}>CREATE</Button>}

@@ -22,7 +22,7 @@ export class ProductTable extends React.Component {
                 <th>DESCRIPTION</th>
                 <th>SUPPLIER</th>
                 <th>QUANTITY</th>
-                <th>PRICE</th>
+                <th>PRICE($)</th>
             </tr>
         );
         const tableBody = page.map(function(product) {
