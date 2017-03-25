@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import thunkMiddleware from 'redux-thunk';
+import promiseMiddleware from 'redux-promise-middleware';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
 
 const rootMiddleware = applyMiddleware(
   thunkMiddleware,
+  promiseMiddleware(),
   routerMiddleware(hashHistory)
 );
 

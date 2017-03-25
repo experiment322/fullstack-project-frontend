@@ -1,17 +1,22 @@
 import React from 'react';
+import _ from 'lodash';
 import { Well, Button } from 'react-bootstrap';
 import { SupplierTable } from './SuppliersComponents';
-import { SearchField, Paginator } from './../MarketComponents';
+import { SearchField, Paginator, PageResizer } from './../MarketComponents';
 
 export default class SuppliersView extends React.Component {
     render() {
-        const { children, filteredList, setQuery, query, pageSize, activePage, setActivePage, openEditor } = this.props;
+        const { children, suppliers, setQuery, query, pageSize, activePage, setActivePage, openEditor, setPageSize } = this.props;
+        const filteredSuppliers = _.filter(suppliers, function(supplier) {
+            return _.includes(supplier.name.toLowerCase(), query);
+        });
         return (
             <Well>
                 <SearchField onChange={setQuery} value={query} />
-                <Button onClick={() => openEditor('new')}>NEW SUPPLIER</Button>
-                <SupplierTable pageSize={pageSize} activePage={activePage} list={filteredList} onClickEdit={openEditor} />
-                <Paginator itemCount={filteredList.length} pageSize={pageSize} activePage={activePage} onPageChange={setActivePage} />
+                <Button bsStyle="primary" onClick={() => openEditor('new')}>NEW SUPPLIER</Button>
+                <PageResizer pageSize={pageSize} onSizeChange={setPageSize} />
+                <SupplierTable pageSize={pageSize} activePage={activePage} suppliers={filteredSuppliers} onClickEdit={openEditor} />
+                <Paginator itemCount={filteredSuppliers.length} pageSize={pageSize} activePage={activePage} onPageChange={setActivePage} />
                 {children}
             </Well>
         );

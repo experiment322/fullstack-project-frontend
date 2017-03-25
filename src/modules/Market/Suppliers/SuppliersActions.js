@@ -1,51 +1,48 @@
-import {  getSuppliers } from './SuppliersResources';
-
-export function requestList() {
-    return {
-        type: 'SUPPLIERS_REQUEST_LIST'
-    };
-};
-
-export function receiveList(list) {
-    return {
-        type: 'SUPPLIERS_RECEIVE_LIST',
-        payload: {
-            list: list
-        }
-    };
-};
-
-export function receiveListError() {
-    return {
-        type: 'SUPPLIERS_RECEIVE_LIST_ERROR'
-    };
-};
+import { getSuppliers } from './SuppliersResources';
+import { push, replace } from 'react-router-redux';
 
 export function getSuppliersAsync() {
-    return function(dispatch, getState) {
-        dispatch(requestList());
-        getSuppliers().then(function(response) {
-            dispatch(receiveList(response.data.data));
-        }).catch(function(error) {
-            dispatch(receiveListError());
-        });
+    return {
+        type: 'GET_SUPPLIERS',
+        payload: getSuppliers()
     };
 };
 
-export function setQuery(query) {
-    return {
-        type: 'SUPPLIERS_SET_QUERY',
-        payload: {
-            query: query
+export function setQuery(location, query) {
+    return replace({
+        pathname: location.pathname,
+        query: {
+            ...location.query,
+            page: 1,
+            name: query.toLowerCase()
         }
-    };
+    });
 };
 
-export function setActivePage(page) {
-    return {
-        type: 'SUPPLIERS_SET_ACTIVE_PAGE',
-        payload: {
+export function setActivePage(location, page) {
+    return replace({
+        pathname: location.pathname,
+        query: {
+            ...location.query,
             page: page
         }
-    };
+    });
+};
+
+export function setPageSize(location, size) {
+    return replace({
+        pathname: location.pathname,
+        query: {
+            ...location.query,
+            page: 1,
+            size: size
+        }
+    });
+};
+
+export function openEditor(location, id) {
+    return push({
+        pathname: '/suppliers/' + id,
+        query: location.query
+    });
 };

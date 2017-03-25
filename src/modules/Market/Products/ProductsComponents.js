@@ -5,16 +5,16 @@ import _ from 'lodash';
 
 export class ProductTable extends React.Component {
     static propTypes = {
-        list: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+        products: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
         suppliers: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
         activePage: React.PropTypes.number.isRequired,
         pageSize: React.PropTypes.number.isRequired,
         onClickEdit: React.PropTypes.func.isRequired
     };
     render() {
-        const { list, suppliers, activePage, pageSize, onClickEdit } = this.props;
+        const { products, suppliers, activePage, pageSize, onClickEdit } = this.props;
         const pageStartIndex = (activePage - 1) * pageSize;
-        const page = list.slice(pageStartIndex, pageStartIndex + pageSize);
+        const page = products.slice(pageStartIndex, pageStartIndex + pageSize);
         const tableHeader = (
             <tr>
                 <th>ID</th>
@@ -36,7 +36,7 @@ export class ProductTable extends React.Component {
                     </td>
                     <td>{product.name}</td>
                     <td>{product.description}</td>
-                    <td>{supplier.name}({supplier.id})</td>
+                    <td>({supplier.id}) {supplier.name}</td>
                     <td>{product.quantity}</td>
                     <td>{product.price}</td>
                 </tr>

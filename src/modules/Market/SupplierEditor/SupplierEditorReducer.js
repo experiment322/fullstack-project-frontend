@@ -10,70 +10,70 @@ const initialState = {
 
 export default function(state = initialState, action) {
     switch(action.type) {
-        case 'SUPPLIER_EDITOR_REQUEST_CREATE': {
+        case 'CREATE_SUPPLIER_PENDING': {
             return {
                 ...state,
                 createPending: true,
                 createError: false
             };
         }
-        case 'SUPPLIER_EDITOR_RECEIVE_CREATE': {
+        case 'CREATE_SUPPLIER_FULFILLED': {
             return {
                 ...state,
                 createPending: false,
                 shouldRefetch: true
             };
         }
-        case 'SUPPLIER_EDITOR_RECEIVE_CREATE_ERROR': {
+        case 'CREATE_SUPPLIER_REJECTED': {
             return {
                 ...state,
                 createPending: false,
                 createError: true
             };
         }
-        case 'SUPPLIER_EDITOR_REQUEST_UPDATE': {
+        case 'UPDATE_SUPPLIER_PENDING': {
             return {
                 ...state,
                 updatePending: true,
                 updateError: false
             };
         }
-        case 'SUPPLIER_EDITOR_RECEIVE_UPDATE': {
+        case 'UPDATE_SUPPLIER_FULFILLED': {
             return {
                 ...state,
                 updatePending: false,
                 shouldRefetch: true
             };
         }
-        case 'SUPPLIER_EDITOR_RECEIVE_UPDATE_ERROR': {
+        case 'UPDATE_SUPPLIER_REJECTED': {
             return {
                 ...state,
                 updatePending: false,
                 updateError: true
             };
         }
-        case 'SUPPLIER_EDITOR_REQUEST_DELETE': {
+        case 'DELETE_SUPPLIER_PENDING': {
             return {
                 ...state,
                 deletePending: true,
                 deleteError: false
             };
         }
-        case 'SUPPLIER_EDITOR_RECEIVE_DELETE': {
+        case 'DELETE_SUPPLIER_FULFILLED': {
             return {
                 ...state,
                 deletePending: false,
                 shouldRefetch: true
             };
         }
-        case 'SUPPLIER_EDITOR_RECEIVE_DELETE_ERROR': {
+        case 'DELETE_SUPPLIER_REJECTED': {
             return {
                 ...state,
                 deletePending: false,
                 deleteError: true
             };
         }
-        case 'SUPPLIER_EDITOR_DID_REFETCH': {
+        case 'DID_REFETCH_SUPPLIERS': {
             return {
                 ...state,
                 shouldRefetch: false

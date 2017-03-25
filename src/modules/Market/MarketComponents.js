@@ -1,6 +1,7 @@
 import React from 'react';
-import { Form, FormGroup, FormControl, InputGroup, Button, Glyphicon, Pagination, Table } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, InputGroup, Button, DropdownButton, MenuItem, Glyphicon, Pagination, Table, Alert } from 'react-bootstrap';
 import _ from 'lodash';
+import './Market.css';
 
 export class SearchField extends React.Component {
     static propTypes = {
@@ -42,6 +43,23 @@ export class Paginator extends React.Component {
     }
 };
 
+export class PageResizer extends React.Component {
+    static propTypes = {
+        pageSize: React.PropTypes.number.isRequired,
+        onSizeChange: React.PropTypes.func.isRequired
+    };
+    render() {
+        const { pageSize, onSizeChange } = this.props;
+        return (
+            <DropdownButton id="page-resizer" bsStyle="primary" key={pageSize} onSelect={value => onSizeChange(value)} title={pageSize + ' items/page'}>
+                <MenuItem eventKey="5">5</MenuItem>
+                <MenuItem eventKey="10">10</MenuItem>
+                <MenuItem eventKey="20">20</MenuItem>
+            </DropdownButton>
+        );
+    }
+};
+
 export class CustomTable extends React.Component {
     static propTypes = {
         header: React.PropTypes.element.isRequired,
@@ -49,6 +67,9 @@ export class CustomTable extends React.Component {
     };
     render() {
         const { header, body } = this.props;
+        if (body.length === 0) return (
+            <Alert bsStyle="info">There is no data to display...</Alert>
+        );
         return (
             <Table bordered hover>
                 <thead>

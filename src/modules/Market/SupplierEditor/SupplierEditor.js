@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import { createSupplierAsync, updateSupplierAsync, deleteSupplierAsync } from './SupplierEditorActions';
-import { push } from 'react-router-redux';
+import { createSupplierAsync, updateSupplierAsync, deleteSupplierAsync, closeEditor } from './SupplierEditorActions';
 import _ from 'lodash';
 import SupplierEditorView from './SupplierEditorView';
 
@@ -13,6 +12,7 @@ function mapStateToProps(state, props) {
 }
 
 function mapDispatchToProps(dispatch, props) {
+    const { location } = props;
     return {
         createSupplier: function(supplier) {
             dispatch(createSupplierAsync(supplier));
@@ -24,7 +24,7 @@ function mapDispatchToProps(dispatch, props) {
             dispatch(deleteSupplierAsync(supplierId));
         },
         closeEditor: function() {
-            dispatch(push('/suppliers'));
+            dispatch(closeEditor(location));
         }
     };
 }

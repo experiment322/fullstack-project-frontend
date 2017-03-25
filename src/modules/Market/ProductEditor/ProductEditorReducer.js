@@ -10,70 +10,70 @@ const initialState = {
 
 export default function(state = initialState, action) {
     switch(action.type) {
-        case 'PRODUCT_EDITOR_REQUEST_CREATE': {
+        case 'CREATE_PRODUCT_PENDING': {
             return {
                 ...state,
                 createPending: true,
                 createError: false
             };
         }
-        case 'PRODUCT_EDITOR_RECEIVE_CREATE': {
+        case 'CREATE_PRODUCT_FULFILLED': {
             return {
                 ...state,
                 createPending: false,
                 shouldRefetch: true
             };
         }
-        case 'PRODUCT_EDITOR_RECEIVE_CREATE_ERROR': {
+        case 'CREATE_PRODUCT_REJECTED': {
             return {
                 ...state,
                 createPending: false,
                 createError: true
             };
         }
-        case 'PRODUCT_EDITOR_REQUEST_UPDATE': {
+        case 'UPDATE_PRODUCT_PENDING': {
             return {
                 ...state,
                 updatePending: true,
                 updateError: false
             };
         }
-        case 'PRODUCT_EDITOR_RECEIVE_UPDATE': {
+        case 'UPDATE_PRODUCT_FULFILLED': {
             return {
                 ...state,
                 updatePending: false,
                 shouldRefetch: true
             };
         }
-        case 'PRODUCT_EDITOR_RECEIVE_UPDATE_ERROR': {
+        case 'UPDATE_PRODUCT_REJECTED': {
             return {
                 ...state,
                 updatePending: false,
                 updateError: true
             };
         }
-        case 'PRODUCT_EDITOR_REQUEST_DELETE': {
+        case 'DELETE_PRODUCT_PENDING': {
             return {
                 ...state,
                 deletePending: true,
                 deleteError: false
             };
         }
-        case 'PRODUCT_EDITOR_RECEIVE_DELETE': {
+        case 'DELETE_PRODUCT_FULFILLED': {
             return {
                 ...state,
                 deletePending: false,
                 shouldRefetch: true
             };
         }
-        case 'PRODUCT_EDITOR_RECEIVE_DELETE_ERROR': {
+        case 'DELETE_PRODUCT_REJECTED': {
             return {
                 ...state,
                 deletePending: false,
                 deleteError: true
             };
         }
-        case 'PRODUCT_EDITOR_DID_REFETCH': {
+        case 'DID_REFETCH_PRODUCTS': {
             return {
                 ...state,
                 shouldRefetch: false

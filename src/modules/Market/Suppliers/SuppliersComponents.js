@@ -5,15 +5,15 @@ import _ from 'lodash';
 
 export class SupplierTable extends React.Component {
     static propTypes = {
-        list: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+        suppliers: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
         activePage: React.PropTypes.number.isRequired,
         pageSize: React.PropTypes.number.isRequired,
         onClickEdit: React.PropTypes.func.isRequired
     };
     render() {
-        const { list, activePage, pageSize, onClickEdit } = this.props;
+        const { suppliers, activePage, pageSize, onClickEdit } = this.props;
         const pageStartIndex = (activePage - 1) * pageSize;
-        const page = list.slice(pageStartIndex, pageStartIndex + pageSize);
+        const page = suppliers.slice(pageStartIndex, pageStartIndex + pageSize);
         const tableHeader = (
             <tr>
                 <th>ID</th>

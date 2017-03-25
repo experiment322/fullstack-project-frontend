@@ -1,31 +1,32 @@
 import { connect } from 'react-redux';
-import { setQuery, setActivePage } from './ProductsActions';
-import { push } from 'react-router-redux';
-import _ from 'lodash';
+import { setQuery, setActivePage, openEditor, setPageSize } from './ProductsActions';
 import ProductsView from './ProductsView';
 
 function mapStateToProps(state, props) {
+    const { location } = props;
     return {
-        query: state.Products.query,
-        pageSize: state.Products.pageSize,
-        activePage: state.Products.activePage,
+        query: location.query.name || '',
+        pageSize: Number(location.query.size) || 5,
+        activePage: Number(location.query.page) || 1,
         suppliers: state.Suppliers.list,
-        filteredList: _.filter(state.Products.list, function(product) {
-            return _.includes(product.name, state.Products.query);
-        })
+        products: state.Products.list
     };
 }
 
 function mapDispatchToProps(dispatch, props) {
+    const { location } = props;
     return {
         setQuery: function(query) {
-            dispatch(setQuery(query));
+            dispatch(setQuery(location, query));
         },
         setActivePage: function(page) {
-            dispatch(setActivePage(page));
+            dispatch(setActivePage(location, page));
+        },
+        setPageSize: function(size) {
+            dispatch(setPageSize(location, size));
         },
         openEditor: function(id) {
-            dispatch(push('/Products/' + id));
+            dispatch(openEditor(location, id));
         }
     };
 }

@@ -1,45 +1,27 @@
 const initialState = {
     list: [],
-    query: '',
-    pageSize: 5,
-    activePage: 1,
     listError: false,
     listPending: false
 };
 
 export default function(state = initialState, action) {
     switch (action.type) {
-        case 'PRODUCTS_REQUEST_LIST': {
+        case 'GET_PRODUCTS_PENDING': {
             return {
                 ...initialState,
                 listPending: true
             };
         }
-        case 'PRODUCTS_RECEIVE_LIST': {
+        case 'GET_PRODUCTS_FULFILLED': {
             return {
-                ...state,
-                listPending: false,
-                list: action.payload.list
+                ...initialState,
+                list: action.payload.data.data
             };
         }
-        case 'PRODUCTS_RECEIVE_LIST_ERROR': {
+        case 'GET_PRODUCTS_REJECTED': {
             return {
-                ...state,
-                listPending: false,
+                ...initialState,
                 listError: true
-            };
-        }
-        case 'PRODUCTS_SET_QUERY': {
-            return {
-                ...state,
-                query: action.payload.query,
-                activePage: initialState.activePage
-            };
-        }
-        case 'PRODUCTS_SET_ACTIVE_PAGE': {
-            return {
-                ...state,
-                activePage: action.payload.page
             };
         }
         default: {

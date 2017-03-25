@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import { createProductAsync, updateProductAsync, deleteProductAsync } from './ProductEditorActions';
-import { push } from 'react-router-redux';
+import { createProductAsync, updateProductAsync, deleteProductAsync, closeEditor } from './ProductEditorActions';
 import _ from 'lodash';
 import ProductEditorView from './ProductEditorView';
 
@@ -14,6 +13,7 @@ function mapStateToProps(state, props) {
 }
 
 function mapDispatchToProps(dispatch, props) {
+    const { location } = props;
     return {
         createProduct: function(product) {
             dispatch(createProductAsync(product));
@@ -25,7 +25,7 @@ function mapDispatchToProps(dispatch, props) {
             dispatch(deleteProductAsync(productId));
         },
         closeEditor: function() {
-            dispatch(push('/products'));
+            dispatch(closeEditor(location));
         }
     };
 }

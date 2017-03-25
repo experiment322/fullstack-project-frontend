@@ -1,51 +1,48 @@
 import { getProducts } from './ProductsResources';
-
-export function requestList() {
-    return {
-        type: 'PRODUCTS_REQUEST_LIST'
-    };
-};
-
-export function receiveList(list) {
-    return {
-        type: 'PRODUCTS_RECEIVE_LIST',
-        payload: {
-            list: list
-        }
-    };
-};
-
-export function receiveListError() {
-    return {
-        type: 'PRODUCTS_RECEIVE_LIST_ERROR'
-    };
-};
+import { push, replace } from 'react-router-redux';
 
 export function getProductsAsync() {
-    return function(dispatch, getState) {
-        dispatch(requestList());
-        getProducts().then(function(response) {
-            dispatch(receiveList(response.data.data));
-        }).catch(function(error) {
-            dispatch(receiveListError());
-        });
+    return {
+        type: 'GET_PRODUCTS',
+        payload: getProducts()
     };
 };
 
-export function setQuery(query) {
-    return {
-        type: 'PRODUCTS_SET_QUERY',
-        payload: {
-            query: query
+export function setQuery(location, query) {
+    return replace({
+        pathname: location.pathname,
+        query: {
+            ...location.query,
+            page: 1,
+            name: query.toLowerCase()
         }
-    };
+    });
 };
 
-export function setActivePage(page) {
-    return {
-        type: 'PRODUCTS_SET_ACTIVE_PAGE',
-        payload: {
+export function setActivePage(location, page) {
+    return replace({
+        pathname: location.pathname,
+        query: {
+            ...location.query,
             page: page
         }
-    };
+    });
+};
+
+export function setPageSize(location, size) {
+    return replace({
+        pathname: location.pathname,
+        query: {
+            ...location.query,
+            page: 1,
+            size: size
+        }
+    });
+};
+
+export function openEditor(location, id) {
+    return push({
+        pathname: '/products/' + id,
+        query: location.query
+    });
 };

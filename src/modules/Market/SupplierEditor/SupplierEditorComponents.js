@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Form, FormGroup, FormControl, Button, ButtonGroup, Panel, Glyphicon, ProgressBar, Label, ControlLabel, HelpBlock } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, Button, ButtonGroup, Panel, Glyphicon, ProgressBar, Label, ControlLabel, HelpBlock, OverlayTrigger, Popover, Alert } from 'react-bootstrap';
 
 export class SupplierEditorForm extends React.Component {
     static propTypes = {
@@ -16,56 +16,89 @@ export class SupplierEditorForm extends React.Component {
     constructor(props) {
         super(props);
         this.defaultState = {
-            name: '',
-            address: ''
+            isValid: {
+                name: true,
+                address: true
+            },
+            data: {
+                name: '',
+                address: ''
+            }
         };
-        this.state = Object.assign({}, this.defaultState, props.supplier);
+        this.state = {
+            isValid: {
+                ...this.defaultState.isValid
+            },
+            data: {
+                ...this.defaultState.data,
+                ...props.supplier
+            }
+        };
         this.changeState = function(e) {
             const { name, value } = e.target;
             this.setState({
-                [name]: value
+                isValid: {
+                    ...this.state.isValid,
+                    [name]: true
+                },
+                data: {
+                    ...this.state.data,
+                    [name]: value
+                }
             });
         }.bind(this);
         this.checkInput = function(field) {
+            const { data } = this.state;
             let isValid = {
-                name: true,
-                address: true
+                name: /^[!-~][ -~]{8,253}[!-~]$/.test(data.name),
+                address: /^[!-~][ -~]{8,253}[!-~]$/.test(data.address)
             };
-            let isEverythingValid = true;
-            const input = this.state;
-            if (!(input.name && _.inRange(input.name.length, 10, 256))) isValid.name = isEverythingValid = false;
-            if (!(input.address && _.inRange(input.address.length, 10, 256))) isValid.address = isEverythingValid = false;
-            if (field) return isValid[field];
-            else return isEverythingValid;
+            this.setState({isValid});
+            return _.reduce(isValid, function(result, isFieldValid) {
+                return result && isFieldValid;
+            }, true);
         }.bind(this);
     }
     componentWillReceiveProps(newProps) {
         if (newProps.supplier) {
-            this.setState(newProps.supplier);
+            this.setState({
+                data: newProps.supplier
+            });
         } else {
             this.setState(this.defaultState);
         }
     }
     render() {
+        const { data, isValid } = this.state;
         const { supplier, onClickCreate, onClickUpdate, onClickDelete } = this.props;
+        const helpPopover = (
+            <Popover id="delete-confirmation" title="DELETE CONFIRMATION">
+                <Alert bsStyle="danger">Deleting a supplier will delete all of its products. Do you want to continue?</Alert>
+                <Button bsStyle="danger" onClick={() => onClickDelete(data.id)}>CONTINUE</Button>
+            </Popover>
+        );
         return (
             <Form onSubmit={e => e.preventDefault()}>
                 {supplier && <h4><Label>Editing supplier with id {supplier.id}.</Label></h4>}
                 {!supplier && <h4><Label>Creating a new supplier.</Label></h4>}
-                <FormGroup validationState={this.checkInput('name') ? 'success' : 'error'}>
+                <FormGroup validationState={isValid.name ? null : 'error'}>
                     <ControlLabel>Name</ControlLabel>
-                    <FormControl name="name" value={this.state.name} onChange={this.changeState} type="text" />
+                    <FormControl name="name" value={data.name} onChange={this.changeState} type="text" />
                     <HelpBlock>A string between 10 and 255 characters.</HelpBlock>
                 </FormGroup>
-                <FormGroup validationState={this.checkInput('address') ? 'success' : 'error'}>
+                <FormGroup validationState={isValid.address ? null : 'error'}>
                     <ControlLabel>Address</ControlLabel>
-                    <FormControl name="address" value={this.state.address} onChange={this.changeState} type="text" />
+                    <FormControl name="address" value={data.address} onChange={this.changeState} type="text" />
                     <HelpBlock>A string between 10 and 255 characters.</HelpBlock>
                 </FormGroup>
                 <ButtonGroup>
-                    {!supplier && <Button bsStyle="primary" onClick={() => this.checkInput() && onClickCreate(this.state)}>CREATE</Button>}
-                    {supplier && <Button bsStyle="primary" onClick={() => this.checkInput() && onClickUpdate(this.state)}>UPDATE</Button>}
-                    {supplier && <Button bsStyle="primary" onClick={() => onClickDelete(this.state.id)}>DELETE</Button>}
+                    {!supplier && <Button bsStyle="primary" onClick={() => this.checkInput() && onClickCreate(data)}>CREATE</Button>}
+                    {supplier && <Button bsStyle="primary" onClick={() => this.checkInput() && onClickUpdate(data)}>UPDATE</Button>}
+                    {supplier &&
+                        <OverlayTrigger trigger="click" placement="top" overlay={helpPopover} rootClose>
+                            <Button bsStyle="primary">DELETE</Button>
+                        </OverlayTrigger>
+                    }
                 </ButtonGroup>
             </Form>
         );
