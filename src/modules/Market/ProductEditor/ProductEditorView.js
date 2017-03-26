@@ -6,6 +6,9 @@ export default class ProductEditorView extends React.Component {
     componentDidMount() {
         animateScroll.scrollToBottom();
     }
+    componentDidUpdate() {
+        animateScroll.scrollToBottom();
+    }
     componentWillUnmount() {
         animateScroll.scrollToTop();
     }
