@@ -6,7 +6,7 @@ import { SearchField, Paginator, PageResizer } from './../MarketComponents';
 
 export default class ProductsView extends React.Component {
     render() {
-        const { children, suppliers, products, setQuery, query, pageSize, activePage, setActivePage, openEditor, setPageSize } = this.props;
+        const { suppliers, products, setQuery, query, pageSize, activePage, setActivePage, openEditor, setPageSize } = this.props;
         const filteredProducts = _.filter(products, function(product) {
             return _.includes(product.name.toLowerCase(), query);
         });
@@ -17,7 +17,6 @@ export default class ProductsView extends React.Component {
                 <PageResizer pageSize={pageSize} onSizeChange={setPageSize} />
                 <ProductTable pageSize={pageSize} activePage={activePage} suppliers={suppliers} products={filteredProducts} onClickEdit={openEditor} />
                 <Paginator itemCount={filteredProducts.length} pageSize={pageSize} activePage={activePage} onPageChange={setActivePage} />
-                {children}
             </Well>
         );
     }

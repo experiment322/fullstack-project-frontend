@@ -46,12 +46,10 @@ ReactDOM.render(
         <IndexRoute component={HomeModule} />
         <Route component={MarketModule}>
           <Route path="latest" component={LatestModule} />
-          <Route path="suppliers" component={SuppliersModule}>
-            <Route path=":id" component={SupplierEditorModule} />
-          </Route>
-          <Route path="products" component={ProductsModule}>
-            <Route path=":id" component={ProductEditorModule} />
-          </Route>
+          <Route path="suppliers" component={SuppliersModule} />
+          <Route path="suppliers/:id" component={SupplierEditorModule} />
+          <Route path="products" component={ProductsModule} />
+          <Route path="products/:id" component={ProductEditorModule} />
         </Route>
       </Route>
     </Router>

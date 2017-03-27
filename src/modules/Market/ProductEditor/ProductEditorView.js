@@ -1,17 +1,7 @@
 import React from 'react';
-import { animateScroll } from 'react-scroll';
 import { ProductEditorForm, ProductEditorPanel } from './ProductEditorComponents';
 
 export default class ProductEditorView extends React.Component {
-    componentDidMount() {
-        animateScroll.scrollToBottom();
-    }
-    componentDidUpdate() {
-        animateScroll.scrollToBottom();
-    }
-    componentWillUnmount() {
-        animateScroll.scrollToTop();
-    }
     render() {
         const { product, suppliers, actionPending, actionError } = this.props;
         const { createProduct, updateProduct, deleteProduct, closeEditor } = this.props;

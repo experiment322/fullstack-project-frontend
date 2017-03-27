@@ -72,15 +72,6 @@ export class ProductEditorForm extends React.Component {
             }, true);
         }.bind(this);
     }
-    componentWillReceiveProps(newProps) {
-        if (newProps.product) {
-            this.setState({
-                data: newProps.product
-            });
-        } else {
-            this.setState(this.defaultState);
-        }
-    }
     render() {
         const { data, isValid } = this.state;
         const { product, suppliers, onClickCreate, onClickUpdate, onClickDelete } = this.props;

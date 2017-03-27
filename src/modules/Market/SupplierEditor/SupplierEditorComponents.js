@@ -59,15 +59,6 @@ export class SupplierEditorForm extends React.Component {
             }, true);
         }.bind(this);
     }
-    componentWillReceiveProps(newProps) {
-        if (newProps.supplier) {
-            this.setState({
-                data: newProps.supplier
-            });
-        } else {
-            this.setState(this.defaultState);
-        }
-    }
     render() {
         const { data, isValid } = this.state;
         const { supplier, onClickCreate, onClickUpdate, onClickDelete } = this.props;

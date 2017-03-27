@@ -6,7 +6,7 @@ import { SearchField, Paginator, PageResizer } from './../MarketComponents';
 
 export default class SuppliersView extends React.Component {
     render() {
-        const { children, suppliers, setQuery, query, pageSize, activePage, setActivePage, openEditor, setPageSize } = this.props;
+        const { suppliers, setQuery, query, pageSize, activePage, setActivePage, openEditor, setPageSize } = this.props;
         const filteredSuppliers = _.filter(suppliers, function(supplier) {
             return _.includes(supplier.name.toLowerCase(), query);
         });
@@ -17,7 +17,6 @@ export default class SuppliersView extends React.Component {
                 <PageResizer pageSize={pageSize} onSizeChange={setPageSize} />
                 <SupplierTable pageSize={pageSize} activePage={activePage} suppliers={filteredSuppliers} onClickEdit={openEditor} />
                 <Paginator itemCount={filteredSuppliers.length} pageSize={pageSize} activePage={activePage} onPageChange={setActivePage} />
-                {children}
             </Well>
         );
     }

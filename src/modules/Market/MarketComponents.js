@@ -38,7 +38,7 @@ export class Paginator extends React.Component {
     render() {
         const { itemCount, pageSize, activePage, onPageChange } = this.props;
         return (
-            <Pagination ellipsis boundaryLinks items={Math.ceil(itemCount / pageSize)} activePage={activePage} onSelect={onPageChange} />
+            <Pagination ellipsis boundaryLinks maxButtons={3} items={Math.ceil(itemCount / pageSize)} activePage={activePage} onSelect={onPageChange} />
         );
     }
 };
