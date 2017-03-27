@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "proxy": "http://localhost:8080",
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "devDependencies": {
-    "react-scripts": "0.9.4"
-  },
   "dependencies": {
     "axios": "^0.15.3",
     "bootstrap": "^3.3.7",
@@ -23,6 +17,9 @@
     "redux-devtools-extension": "^2.13.0",
     "redux-promise-middleware": "^4.2.0",
     "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "react-scripts": "0.9.4"
   },
   "scripts": {
     "start": "react-scripts start",
